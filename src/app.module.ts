@@ -18,5 +18,3 @@ import { TaskModule } from './tasks/task.module';
   providers: [AppService],
 })
 export class AppModule {}
-console.log('DB_URI:', process.env.DB_URI);
-console.log('JWT_SECRET:', process.env.JWT_SECRET);

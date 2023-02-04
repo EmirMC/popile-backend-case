@@ -72,7 +72,7 @@ jobs:
               \"containerName\": \"${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}\",
               \"containerPort\": 80,
               \"healthCheck\": {
-                \"path\": \"/healthcheck/liveness\",
+                \"path\": \"/\",
                 \"intervalSeconds\": 10
               }
             }"
