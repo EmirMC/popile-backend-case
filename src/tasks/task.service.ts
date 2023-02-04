@@ -8,8 +8,10 @@ import { TaskDetail, CreateTask, UpdateTask } from './task.interface';
 export class TaskService {
   constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
-  public async findAll(user_id: string): Promise<TaskDetail[]> {
-    const tasks = await this.taskModel.find({ user_id }).exec();
+  public async findAll(user: string): Promise<TaskDetail[]> {
+    const tasks = await this.taskModel
+      .find({ user: new Types.ObjectId(user) })
+      .exec();
     return tasks.map((task) => this._getTaskDetail(task));
   }
 
