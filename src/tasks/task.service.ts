@@ -11,6 +11,7 @@ export class TaskService {
   public async findAll(user: string): Promise<TaskDetail[]> {
     const tasks = await this.taskModel
       .find({ user: new Types.ObjectId(user) })
+      .sort({ createdAt: -1 })
       .exec();
     return tasks.map((task) => this._getTaskDetail(task));
   }

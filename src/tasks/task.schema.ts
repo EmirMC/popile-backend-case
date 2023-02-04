@@ -19,7 +19,7 @@ export class Task {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: mongoose.Types.ObjectId;
 
-  @Prop({ default: mongoose.now() })
+  @Prop({ default: mongoose.now })
   createdAt: Date;
 }
 
