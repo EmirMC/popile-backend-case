@@ -49,3 +49,30 @@ jobs:
             --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
             --label ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
             --image ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}
+
+          IMAGE_TAG=$(aws lightsail get-container-images --service ${{env.AWS_LIGHTSAIL_SERVICE_NAME}} | jq -r .containerImages[0].image)
+
+          # create a deployment with uploaded docker image
+          aws lightsail create-container-service-deployment \
+            --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
+            --containers "{
+              \"${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}\": {
+                \"image\": \"$IMAGE_TAG\",
+                \"environment\": {
+                  \"NODE_ENV\": \"production\",
+                  \"DB_URI\": \"${{ secrets.DB_URI }}\",
+                  \"JWT_SECRET\": \"${{ secrets.JWT_SECRET }}\"
+                },
+                \"ports\": {
+                  \"80\": \"HTTP\"
+                }
+              }
+            }" \
+            --public-endpoint "{
+              \"containerName\": \"${{ env.AWS_LIGHTSAIL_SERVICE_NAME }}\",
+              \"containerPort\": 80,
+              \"healthCheck\": {
+                \"path\": \"/healthcheck/liveness\",
+                \"intervalSeconds\": 10
+              }
+            }"
