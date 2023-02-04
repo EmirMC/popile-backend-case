@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build
+FROM node:16.18.0 as build
 
 WORKDIR /home/app
 
@@ -13,9 +13,9 @@ RUN npm run build
 
 ### Build production image
 
-ENV PORT=80
+FROM node:16.18.0 as prod
 
-FROM node:lts-alpine as prod
+ENV PORT=80
 
 WORKDIR /home/app
 
