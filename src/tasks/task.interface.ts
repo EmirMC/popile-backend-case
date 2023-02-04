@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export enum TaskStatus {
   TODO = 'todo',
-  GOING = 'going',
+  DOING = 'doing',
   DONE = 'done',
 }
 

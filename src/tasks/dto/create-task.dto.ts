@@ -9,6 +9,8 @@ export class CreateTaskDto {
   description?: string | null;
 
   @IsOptional()
-  @IsEnum(TaskStatus)
+  @IsEnum(TaskStatus, {
+    message: 'Status must be ' + Object.values(TaskStatus).join(', '),
+  })
   status?: TaskStatus | null;
 }
