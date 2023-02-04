@@ -1,6 +1,6 @@
 FROM node:lts-alpine as build
 
-WORKDIR /usr/src/app
+WORKDIR /home/app
 
 COPY package*.json ./
 
@@ -15,10 +15,10 @@ RUN npm run build
 
 FROM node:lts-alpine as prod
 
-WORKDIR /usr/src/app
+WORKDIR /home/app
 
-COPY --from=build /usr/src/app/dist ./dist
-COPY --from=build /usr/src/app/package*.json ./
+COPY --from=build /home/app/dist ./dist
+COPY --from=build /home/app/package*.json ./
 
 EXPOSE 8000
 
